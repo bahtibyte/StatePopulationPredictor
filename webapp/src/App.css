@@ -79,9 +79,18 @@ padding-left: 2px;
 
 
 #header_dropdown{
-  flex-basis: 33%;
+   flex-basis: 33%;
   display: flex;
   justify-content: space-evenly;
+
+
+
+}
+
+#svg_container{
+  position: absolute;
+  right: 100px;
+  top: 80px;
 }
 #Map{
   /* background-color:pink; */
