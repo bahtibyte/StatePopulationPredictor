@@ -1,14 +1,6 @@
-
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import ReactTooltip from 'react-tooltip';
-// import avgFit from '../avg_fit.json'
 
-// let config = {
-//   "posColorStart": "#d3e5ff",
-//   "posColorEnd": "#08306B",
-//   "negColorStart": "#fbc1c9",
-//   "negColorEnd": "#8300ff"
-// }
 
 let config = {
   "posColorStart": "#c7ffbc",
@@ -17,11 +9,7 @@ let config = {
   "negColorEnd": "#ff0000"
 }
 
-let WIDTH = 800, HEIGHT = 500;
-
 let COLOR_COUNTS = 40;
-
-let SCALE = 1;
 
 function Interpolate(start, end, steps, count) {
   let s = start,
@@ -57,19 +45,6 @@ function hexToRgb(hex) {
     b: parseInt(result[3], 16)
   } : null;
 }
-
-function valueFormat(d) {
-  if (d > 1000000000) {
-    return Math.round(d / 1000000000 * 10) / 10 + "B";
-  } else if (d > 1000000) {
-    return Math.round(d / 1000000 * 10) / 10 + "M";
-  } else if (d > 1000) {
-    return Math.round(d / 1000 * 10) / 10 + "K";
-  } else {
-    return d;
-  }
-}
-
 
 
 let rgb = hexToRgb(config.posColorStart);
@@ -158,44 +133,12 @@ class App2 extends React.Component {
     }
     this.idNameMap = id_name_map
 
-
-    // let maxGrowth = 0
-    // let minGrowth = Infinity
-
     let rateOfChangeDict = {
       maxGrowth: 0,
       minGrowth: Infinity,
       maxLoss: -Infinity,
       minLoss: 0
     }
-
-
-    // 
-    // Object.entries(this.props.data[this.props.year[0]]).forEach(([state, population]) => {
-
-    //   // The end 'Year' that we want to compare to
-    //   let comparisonYear = this.props.data[this.props.year[1]]
-
-    //   let growth = comparisonYear[state] - population
-
-    //   if (growth >= 0) {
-    //     rateOfChangeDict.maxGrowth = Math.max(rateOfChangeDict.maxGrowth, growth)
-    //     rateOfChangeDict.minGrowth = Math.min(rateOfChangeDict.minGrowth, growth)
-    //   } else {
-    //     rateOfChangeDict.maxLoss = Math.max(rateOfChangeDict.maxLoss, growth)
-    //     rateOfChangeDict.minLoss = Math.min(rateOfChangeDict.minLoss, growth)
-    //   }
-
-
-
-
-    //   let id = name_id_map[state];
-    //   // access our valueById hash array
-    //   // key = id, value = population (Converted to an integer)
-    //   // This is for when we map to HTML Elements, we can lookup a value by ID
-
-    //   this.valueById.set(id, +growth);
-    // });
 
     // Default Dict Equivalent. Default growth is = 0
     let totalGrowthDict = new Proxy({}, {
@@ -251,22 +194,9 @@ class App2 extends React.Component {
     })
 
     this.outlinePathData = path(topojson.mesh(this.state.us, this.state.us.objects.states, function (a, b) { return a !== b; }))
-    //       pathData = pathData.filter(function(x) {
-    //         return x !== undefined;
-    //    });
     this.setState({ mapPaths: pathData })
 
   }
-
-  // componentDidMount() {
-  //   d3.tsv("https://gist.githubusercontent.com/amartone/5e9a82772cf1337d688fe47729e99532/raw/65a04d5b4934beda724630f18c475d350628f64d/us-state-names.tsv", (error, names) => {
-  //     d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json", (error, us) => {
-  //       // d3.csv(population, (err, data) => {
-  //       this.setState({ names, us })
-  //       // })
-  //     })
-  //   })
-  // }
 
 
   componentDidMount() {

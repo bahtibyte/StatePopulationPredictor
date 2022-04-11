@@ -6,14 +6,16 @@ import {
   IntegratedFiltering,
   SearchState,
 } from '@devexpress/dx-react-grid';
+
 import {
   Grid,
-  Table,
   Toolbar,
   SearchPanel,
   VirtualTable,
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
+
+
 
 let tableComponent = (props) => {
   const [columns] = useState([
@@ -30,13 +32,6 @@ let tableComponent = (props) => {
 
   useEffect(() => {
     let tempRows = []
-
-    // Object.entries(data[props.yearRange[0]]).forEach(([key, value])=>{
-
-    //     tempRows.push({name: key, change: data[props.yearRange[1]][key] - value, population: data[props.yearRange[1]][key]})
-    // })
-    // setRows(tempRows)
-
 
     let totalGrowthDict = new Proxy({}, {
       get: function (object, property) {
@@ -68,8 +63,6 @@ let tableComponent = (props) => {
       <Grid
         rows={rows}
         columns={columns}
-        // style={{ height: '500px' }}
-        // style={{ height: '100%' }}
         rootComponent={Root}
       >
         <SortingState
@@ -94,9 +87,5 @@ let tableComponent = (props) => {
 };
 
 export default React.memo(tableComponent, (prevProps, nextProps) => {
-  // console.log("MEMOIZATION")
-  // if(prevProps.mouseInUseOptimization != nextProps.mouseInUseOptimization){
-  // console.log("UPDATE")
   return nextProps.mouseInUseOptimization
-  // }
 });
