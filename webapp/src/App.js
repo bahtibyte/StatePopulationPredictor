@@ -86,9 +86,9 @@ function App() {
 
        
         </div>
-        <div>
+        {/* <div>
             Display Years: 2015-2019
-          </div>
+          </div> */}
     <div id="tableContainer">
 <StatTable yearRange={yearSliderValue} data={metricData} mouseInUseOptimization={mouseInUse}/>
     </div>
