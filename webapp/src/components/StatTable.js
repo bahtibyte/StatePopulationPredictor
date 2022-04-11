@@ -20,7 +20,7 @@ import {
 let tableComponent = (props) => {
   const [columns] = useState([
     { name: 'name', title: 'Name' },
-    { name: 'change', title: '△ Population' },
+    { name: 'change', title: '△ Transfer' },
     { name: 'population', title: 'Population' }
   ]);
   const [rows, setRows] = useState([]);

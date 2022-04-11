@@ -223,7 +223,7 @@ class App2 extends React.Component {
             }
             const [name, change, population] = dataTip.split("|")
 
-            return <div><div style={{ "fontSize": "18px" }}>{name}</div>△ Population: {change}<br />New Population: {population}</div>
+            return <div><div style={{ "fontSize": "18px" }}>{name}</div>△ Transfer: {change}<br />New Population: {population}</div>
           }
           }
 
