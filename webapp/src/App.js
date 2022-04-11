@@ -22,9 +22,11 @@ import ClampedSlider from './components/ClampedSlider'
 import StatTable from './components/StatTable';
 
 
-import avg_fit_population from './data/avg_fit.json'
-import best_fit_population from './data/best_fit.json'
+import avg_fit_population from './data/avg_fit_model_v2.json'
+import best_fit_population from './data/best_fit_model_v2.json'
 
+// import avg_fit_population from './data/avg_fit.json'
+// import best_fit_population from './data/best_fit.json'
 
 
 

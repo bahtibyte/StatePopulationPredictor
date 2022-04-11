@@ -171,12 +171,48 @@ class App2 extends React.Component {
 
 
     // 
-    Object.entries(this.props.data[this.props.year[0]]).forEach(([country, population]) => {
+    // Object.entries(this.props.data[this.props.year[0]]).forEach(([state, population]) => {
+
+    //   // The end 'Year' that we want to compare to
+    //   let comparisonYear = this.props.data[this.props.year[1]]
+
+    //   let growth = comparisonYear[state] - population
+
+    //   if (growth >= 0) {
+    //     rateOfChangeDict.maxGrowth = Math.max(rateOfChangeDict.maxGrowth, growth)
+    //     rateOfChangeDict.minGrowth = Math.min(rateOfChangeDict.minGrowth, growth)
+    //   } else {
+    //     rateOfChangeDict.maxLoss = Math.max(rateOfChangeDict.maxLoss, growth)
+    //     rateOfChangeDict.minLoss = Math.min(rateOfChangeDict.minLoss, growth)
+    //   }
+
+
+
+
+    //   let id = name_id_map[state];
+    //   // access our valueById hash array
+    //   // key = id, value = population (Converted to an integer)
+    //   // This is for when we map to HTML Elements, we can lookup a value by ID
+
+    //   this.valueById.set(id, +growth);
+    // });
+
+    // Default Dict Equivalent. Default growth is = 0
+    let totalGrowthDict = new Proxy({}, {
+      get: function (object, property) {
+        return object.hasOwnProperty(property) ? object[property] : 0;
+      }
+    });
+
+    for (let currentYear = this.props.year[0]; currentYear < this.props.year[1] + 1; currentYear++) {
+      Object.entries(this.props.data[currentYear]).forEach(([state, data]) => {
+        totalGrowthDict[state] += data.net_change
+      })
+    }
+
+    Object.entries(totalGrowthDict).forEach(([state, growth]) => {
 
       // The end 'Year' that we want to compare to
-      let comparisonYear = this.props.data[this.props.year[1]]
-
-      let growth = comparisonYear[country] - population
 
       if (growth >= 0) {
         rateOfChangeDict.maxGrowth = Math.max(rateOfChangeDict.maxGrowth, growth)
@@ -189,7 +225,7 @@ class App2 extends React.Component {
 
 
 
-      let id = name_id_map[country];
+      let id = name_id_map[state];
       // access our valueById hash array
       // key = id, value = population (Converted to an integer)
       // This is for when we map to HTML Elements, we can lookup a value by ID
@@ -214,7 +250,7 @@ class App2 extends React.Component {
       return { id: feature.id, path: path(feature) }
     })
 
-    this.outlinePathData = path(topojson.mesh(this.state.us, this.state.us.objects.states, function(a, b) { return a !== b; }))
+    this.outlinePathData = path(topojson.mesh(this.state.us, this.state.us.objects.states, function (a, b) { return a !== b; }))
     //       pathData = pathData.filter(function(x) {
     //         return x !== undefined;
     //    });
@@ -235,7 +271,7 @@ class App2 extends React.Component {
 
   componentDidMount() {
     d3.tsv(require('../data/us-state-names.tsv'), (error, names) => {
-        this.setState({ names, us: require('../data/states-10m.json') })
+      this.setState({ names, us: require('../data/states-10m.json') })
 
     })
   }
@@ -250,31 +286,31 @@ class App2 extends React.Component {
   render() {
     return (
       <div id="canvas-svg" ref={this.selector}>
-        <ReactTooltip border={false}   
-        getContent={(dataTip) => {
-          if (!dataTip) {
-            return "";
-          }
-          const [name, change, population] =  dataTip.split("|")
+        <ReactTooltip border={false}
+          getContent={(dataTip) => {
+            if (!dataTip) {
+              return "";
+            }
+            const [name, change, population] = dataTip.split("|")
 
-          return <div><div style={{"fontSize": "18px"}}>{name}</div>△ Population: {change}<br/>New Population: {population}</div>
-        }
-   }
-  
-  />
+            return <div><div style={{ "fontSize": "18px" }}>{name}</div>△ Population: {change}<br />New Population: {population}</div>
+          }
+          }
+
+        />
         <svg width={1000} height={500}>
           {this.state.mapPaths.map((item) => {
             let style = ""
             if (this.valueById.get(item.id) != undefined) {
               let value = this.valueById.get(item.id)
-              
+
               let color = null;
-              if(value >= 0){
+              if (value >= 0) {
                 let i = this.positive_quantize(value);
-              color = positive_colors[i].getColors();
-              }else{
+                color = positive_colors[i].getColors();
+              } else {
                 let i = this.negative_quantize(value);
-              color = negative_colors[i].getColors();
+                color = negative_colors[i].getColors();
               }
 
               style = "rgb(" + color.r + "," + color.g +
@@ -282,15 +318,13 @@ class App2 extends React.Component {
             } else {
               style = "rgb(255, 0, 0)";
             }
-
-
             return <path style={{ "outline": "none" }} key={item.id} data-tip={
-              `${this.idNameMap[item.id]}|${this.valueById.get(item.id)}|${this.props.data[this.props.year[1]][this.idNameMap[item.id]]}`
+              `${this.idNameMap[item.id]}|${this.valueById.get(item.id)}|${this.props.data[this.props.year[1]][this.idNameMap[item.id]]?.population}`
             }
-             d={item.path} fill={style} />
+              d={item.path} fill={style} />
           })}
 
-<path style={{ "stroke": "grey", "strokeLinejoin":"round", "fill":"none" }}  d={this.outlinePathData}  />
+          <path style={{ "stroke": "grey", "strokeLinejoin": "round", "fill": "none" }} d={this.outlinePathData} />
 
         </svg>
 
