@@ -249,7 +249,7 @@ class App2 extends React.Component {
               style = "rgb(255, 0, 0)";
             }
             return <path style={{ "outline": "none" }} key={item.id} data-tip={
-              `${this.idNameMap[item.id]}|${this.valueById.get(item.id)}|${this.props.data[this.props.year[1]][this.idNameMap[item.id]]?.population}`
+              `${this.idNameMap[item.id]}|${this.valueById.get(item.id)?.toLocaleString()}|${this.props.data[this.props.year[1]][this.idNameMap[item.id]]?.population?.toLocaleString()}`
             }
               d={item.path} fill={style} />
           })}
