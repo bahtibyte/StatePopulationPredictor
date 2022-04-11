@@ -3,7 +3,7 @@ import React from 'react';
 
 const minDistance = 1;
 
-const maxYear = 2030
+const maxYear = 2060
 
 export default function App(props) {
   const handleChange2 = (event, newValue, activeThumb) => {

@@ -20,7 +20,7 @@ import best_fit_population from './data/best_fit_model_v2.json'
 
 
 function App() {
-  const [yearSliderValue, yearSliderChange] = useState([2012, 2013]);
+  const [yearSliderValue, yearSliderChange] = useState([2010, 2030]);
   const [metricData, changeMetricData] = useState(best_fit_population)
   const [metric, metricChange] = useState("Best-Fit");
   const [mouseInUse, changeMouseStatus] = useState(false)
