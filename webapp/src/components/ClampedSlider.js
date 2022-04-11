@@ -3,6 +3,8 @@ import React from 'react';
 
 const minDistance = 1;
 
+const maxYear = 2050
+
 export default function App(props) {
   const handleChange2 = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -12,7 +14,7 @@ export default function App(props) {
 
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 2099 - minDistance);
+        const clamped = Math.min(newValue[0], maxYear - minDistance);
         props.onChange([clamped, clamped + minDistance]);
       } else {
         const clamped = Math.max(newValue[1], minDistance);
@@ -30,7 +32,7 @@ export default function App(props) {
       onChange={handleChange2}
       valueLabelDisplay="auto"
       getAriaValueText={(value) => value}
-      marks min={2010} max={2099}
+      marks min={2010} max={maxYear}
     />
   );
 }
